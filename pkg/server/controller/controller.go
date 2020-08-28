@@ -1,7 +1,9 @@
 package controller
 
-import(
+import (
 	"log"
+	//"strings"
+	"time"
 
 	// import gin library
 	"github.com/gin-gonic/gin"
@@ -12,6 +14,7 @@ import(
 
 var(
 	user model.User
+	zeller model.Zeller
 )
 
 type Controller struct {
@@ -46,6 +49,16 @@ func (ctrl *Controller)SayHello(context *gin.Context) {
 //   }
 // }
 func (ctrl *Controller)Task1(context *gin.Context) {
+	t := time.Now()
+	layout := "2006-01-02 15:04:05"
+
+	context.JSON(200, gin.H{
+		"timestamp": t.Format(layout),
+		"detail": gin.H{
+			"date": time.Now().Format("2006-01-02"),
+			"time": time.Now().Format("15:04:05"),
+		},
+	})
 }
 
 // 課題2
@@ -64,6 +77,12 @@ func (ctrl *Controller)Task1(context *gin.Context) {
 //   "week": string //例： Monday
 // }
 func (ctrl *Controller)Task2(context *gin.Context) {
+	err := context.BindJSON(&zeller)
+	if err != nil {
+		log.Println("[ERROR] Faild Bind JSON")
+		context.JSON(500, gin.H{"message": "Internal Server Error"})
+		return
+	}
 }
 
 // 課題3
