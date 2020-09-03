@@ -11,8 +11,9 @@ type User struct {
 //   "day": Int,
 // }
 
-type Zeller struct {
-	Year 	int	`json:"year"`
-	Month	int `json:"month"`
-	Day		int `json:"day"`
+type ZellerElements struct {
+	Year	int	`json:"year"`
+	Month	int	`json:"month"`
+	Day		int	`json:"day"`
 }
+

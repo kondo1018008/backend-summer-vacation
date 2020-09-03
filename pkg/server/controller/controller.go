@@ -10,11 +10,14 @@ import (
 
 	// import sample API packages
 	"github.com/miraikeitai2020/backend-summer-vacation/pkg/server/model"
+
+	"github.com/miraikeitai2020/backend-summer-vacation/pkg/zeller"
+
 )
 
 var(
 	user model.User
-	zeller model.Zeller
+	z model.ZellerElements
 )
 
 type Controller struct {
@@ -77,12 +80,16 @@ func (ctrl *Controller)Task1(context *gin.Context) {
 //   "week": string //例： Monday
 // }
 func (ctrl *Controller)Task2(context *gin.Context) {
-	err := context.BindJSON(&zeller)
+	err := context.BindJSON(&z)
 	if err != nil {
 		log.Println("[ERROR] Faild Bind JSON")
 		context.JSON(500, gin.H{"message": "Internal Server Error"})
 		return
 	}
+	context.JSON(200, gin.H{
+		"week": zeller.DerivationDays(z.Month, z.Year, z.Day),
+	})
+
 }
 
 // 課題3
